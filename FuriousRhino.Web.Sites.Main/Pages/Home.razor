@@ -1,0 +1,33 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<FluentCard Height="auto" Style="align-items:center;">
+    <p><img src="content/zombeeslogo.png" style="display:block;max-width:500px;height:auto;" /></p>
+    <p><img src="content/kickstarterlogo.png" style="display:block;max-width:500px;height:auto;" /></p>
+    <br />
+    <p>Our Kickstarter is coming soon! Check back for more info.</p>
+    <br />
+    <FluentStack Orientation="Orientation.Horizontal"
+                  gap="24"
+                  style="justify-content:center; align-items:center; flex-wrap:wrap;">
+
+        <FluentAnchor Href="@tikTokLink" target="_blank">
+            <img src="/content/tiktoklogo.png"
+                 alt="Furious Rhino on TikTok"
+                 style="width:50px; height:auto;" />
+        </FluentAnchor>
+
+        <FluentAnchor Href="https://bsky.app/profile/furiousrhino.com" target="_blank">
+            <img src="/content/blueskylogo.png"
+                 alt="Furious Rhino on BlueSky"
+                 style="width:50px; height:auto;" />
+        </FluentAnchor>
+
+    </FluentStack>
+
+</FluentCard>
+
+@code {
+    private readonly string tikTokLink = "https://www.tiktok.com/@furiousrhino";
+}

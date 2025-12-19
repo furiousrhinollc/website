@@ -1,0 +1,45 @@
+﻿@inherits LayoutComponentBase
+
+<FluentLayout>
+    <FluentDesignTheme
+        CustomColor="#000000"
+        @bind-Mode="@currentTheme"
+        StorageName="frtheme" />
+    <FluentHeader Class="siteheader">
+        <a href="/" title="Furious Rhino"><img src="content/logotitle.png" alt="Furious Rhino" class="logo" height="40" /></a>
+        <FluentSpacer />
+        <FluentButton @onclick="ChangeTheme" @bind-IconStart="@themeIcon">Mode</FluentButton>
+    </FluentHeader>
+    <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
+        <NavMenu />
+        <FluentBodyContent Class="body-content">
+            <ErrorBoundary>
+                <ChildContent>
+                    <div class="content">
+                        @Body
+                    </div>
+                </ChildContent>
+                <ErrorContent Context="ex">
+                    <div class="blazor-error-boundary">@ex.Message</div>
+                </ErrorContent>
+            </ErrorBoundary>
+        </FluentBodyContent>
+    </FluentStack>
+</FluentLayout>
+
+@code {
+    private DesignThemeModes currentTheme = DesignThemeModes.Dark;
+
+    private Icon themeIcon
+    {
+        get {
+            return currentTheme == DesignThemeModes.Dark ? new Icons.Regular.Size24.WeatherSunny() : new Icons.Regular.Size24.WeatherMoon();
+        }
+        set { }
+    }
+
+    private void ChangeTheme()
+    {
+        currentTheme = currentTheme == DesignThemeModes.Dark ? DesignThemeModes.Light : DesignThemeModes.Dark;
+    }
+}

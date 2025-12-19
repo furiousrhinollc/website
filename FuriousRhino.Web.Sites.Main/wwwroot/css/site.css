@@ -1,0 +1,5 @@
+﻿.siteheader {
+    background-color: #000 !important;
+    border-bottom: calc(var(--stroke-width) * 2px) solid #cc0606;
+    margin-bottom: 0 !important;
+}
