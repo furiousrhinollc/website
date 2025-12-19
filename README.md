@@ -1,1 +1,1 @@
-# FuriousRhino.Web
+Furious Rhino website
