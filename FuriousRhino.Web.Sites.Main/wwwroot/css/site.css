@@ -1,5 +1,24 @@
-﻿.siteheader {
+﻿html, body {
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+}
+
+.siteheader {
     background-color: #000 !important;
     border-bottom: calc(var(--stroke-width) * 2px) solid #cc0606;
     margin-bottom: 0 !important;
+}
+
+.sitefooter {
+    background-color: var(--neutral-fill-layer-rest) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    line-height: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: content-box !important;
 }

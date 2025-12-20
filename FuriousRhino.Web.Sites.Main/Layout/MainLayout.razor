@@ -25,9 +25,55 @@
             </ErrorBoundary>
         </FluentBodyContent>
     </FluentStack>
+    <FluentFooter Class="sitefooter">
+        <FluentStack Orientation="Orientation.Horizontal"
+            HorizontalAlignment="HorizontalAlignment.Center"
+            HorizontalGap="25">
+
+            <FluentAnchor Href="@tikTokLink" target="_blank" Class="fluent-anchor">
+                <img src="/content/tiktoklogo.png"
+                     alt="Furious Rhino on TikTok"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+
+            <FluentAnchor Href="https://bsky.app/profile/furiousrhino.com" target="_blank" Class="fluent-anchor">
+                <img src="/content/blueskylogo.png"
+                     alt="Furious Rhino on BlueSky"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+
+            <FluentAnchor Href="@youTubeLink" target="_blank" Class="fluent-anchor">
+                <img src="/content/youtubelogo.png"
+                     alt="Furious Rhino on YouTube"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+
+            <FluentAnchor Href="https://www.instagram.com/furiousrhino/" target="_blank" Class="fluent-anchor">
+                <img src="/content/instagramlogo.png"
+                     alt="Furious Rhino on Instagram"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+
+            <FluentAnchor Href="@threadsLink" target="_blank" Class="fluent-anchor">
+                <img src="/content/threadslogo.png"
+                     alt="Furious Rhino on Threads"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+
+            <FluentAnchor Href="#" Class="fluent-anchor">
+                <img src="/content/kickstartersociallogo.png"
+                     alt="Furious Rhino on Kickstarter"
+                     style="max-height:18px;width:auto;" />
+            </FluentAnchor>
+        </FluentStack>
+    </FluentFooter>
 </FluentLayout>
 
 @code {
+    private readonly string tikTokLink = "https://www.tiktok.com/@furiousrhino";
+    private readonly string youTubeLink = "https://www.youtube.com/@furiousrhinollc";
+    private readonly string threadsLink = "https://www.threads.com/@furiousrhino";
+
     private DesignThemeModes currentTheme = DesignThemeModes.Dark;
 
     private Icon themeIcon
