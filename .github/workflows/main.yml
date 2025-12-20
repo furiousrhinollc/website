@@ -35,8 +35,18 @@ jobs:
         uses: actions/setup-dotnet@v5.0.1
       - name: Publish project
         run: dotnet publish FuriousRhino.Web.Sites.Main/FuriousRhino.Web.Sites.Main.csproj -c Release -o release --nologo
-      - name: Commit wwwroot to Pages
-        uses: actions/deploy-pages@v4.0.5
+      - name: Rewrite base href
+        uses: SteveSandersonMS/ghaction-rewrite-base-href@v1.1.0
         with:
-          folder: release/wwwroot
+          html_path: ${{ env.PUBLISH_DIR }}/index.html
+          base_href: /website/
+      - name: Setup Pages
+        uses: actions/configure-pages@v5.0.0
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4.0.0
+        with:
+          path: ${{ env.PUBLISH_DIR }}
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
           
