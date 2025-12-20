@@ -1,9 +1,12 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
+env:
+  PUBLISH_DIR: FuriousRhino.Web.Sites.Main/bin/Release/net10.0/publish/wwwroot
 
 on:
   # Runs on pushes targeting the default branch
   push:
+    paths: FuriousRhino.Web.Sites.Main/**
     branches: ["master"]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -27,14 +30,16 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v5.0.1
       - name: Publish project
-        run: dotnet publish FuriousRhino.Web.Sites.Main/FuriousRhino.Web.Sites.Main.csproj -c Release -o release --nologo
+        run: dotnet publish FuriousRhino.Web.Sites.Main/FuriousRhino.Web.Sites.Main.csproj -c Release
       - name: Rewrite base href
         uses: SteveSandersonMS/ghaction-rewrite-base-href@v1.1.0
         with:
