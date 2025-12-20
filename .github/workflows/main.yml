@@ -44,11 +44,6 @@ jobs:
         run: dotnet publish FuriousRhino.Web.Sites.Main -c Release
       - name: Disable Jekyll
         run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
-      - name: Rewrite base href
-        uses: SteveSandersonMS/ghaction-rewrite-base-href@v1.1.0
-        with:
-          html_path: ${{ env.PUBLISH_DIR }}/index.html
-          base_href: /website/
       - name: Setup Pages
         uses: actions/configure-pages@v5.0.0
       - name: Upload artifact
