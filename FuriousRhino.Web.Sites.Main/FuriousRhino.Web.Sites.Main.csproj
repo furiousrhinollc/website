@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Content Include=".gitattributes" />
-    <Content Include=".nojekyll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +20,10 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\.nojekyll" />
   </ItemGroup>
 
 </Project>
