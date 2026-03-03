@@ -1,0 +1,6 @@
+@FuriousRhino.Web.Sites.Api_HostAddress = http://localhost:5095
+
+GET {{FuriousRhino.Web.Sites.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="FuriousRhino.Web.Sites.Api/FuriousRhino.Web.Sites.Api.csproj" Id="93390c20-6337-4afa-90a1-fbe1ea079b85" />
   <Project Path="FuriousRhino.Web.Sites.Main/FuriousRhino.Web.Sites.Main.csproj" />
 </Solution>
