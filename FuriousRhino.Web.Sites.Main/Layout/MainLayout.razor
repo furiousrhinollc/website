@@ -1,10 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
 <FluentLayout>
-    <FluentDesignTheme
-        CustomColor="#000000"
-        @bind-Mode="@currentTheme"
-        StorageName="frtheme" />
+    <FluentDesignTheme CustomColor="#000000"
+                       @bind-Mode="@currentTheme"
+                       StorageName="frtheme" />
     <FluentHeader Class="siteheader">
         <a href="/" title="Furious Rhino"><img src="content/logotitle.png" alt="Furious Rhino" class="logo" height="40" /></a>
         <FluentSpacer />
@@ -27,41 +26,41 @@
     </FluentStack>
     <FluentFooter Class="sitefooter">
         <FluentStack Orientation="Orientation.Horizontal"
-            HorizontalAlignment="HorizontalAlignment.Center"
-            HorizontalGap="25">
+                     HorizontalAlignment="HorizontalAlignment.Center"
+                     HorizontalGap="25">
 
             <FluentAnchor Href="@tikTokLink" target="_blank" Class="fluent-anchor">
-                <img src="/content/tiktoklogo.png"
+                <img src="/img/tiktok.png"
                      alt="Furious Rhino on TikTok"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
 
             <FluentAnchor Href="https://bsky.app/profile/furiousrhino.com" target="_blank" Class="fluent-anchor">
-                <img src="/content/blueskylogo.png"
+                <img src="/img/bluesky.png"
                      alt="Furious Rhino on BlueSky"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
 
             <FluentAnchor Href="@youTubeLink" target="_blank" Class="fluent-anchor">
-                <img src="/content/youtubelogo.png"
+                <img src="/img/youtube.png"
                      alt="Furious Rhino on YouTube"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
 
             <FluentAnchor Href="https://www.instagram.com/furiousrhino/" target="_blank" Class="fluent-anchor">
-                <img src="/content/instagramlogo.png"
+                <img src="/img/instagram.png"
                      alt="Furious Rhino on Instagram"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
 
             <FluentAnchor Href="@threadsLink" target="_blank" Class="fluent-anchor">
-                <img src="/content/threadslogo.png"
+                <img src="/img/threads.png"
                      alt="Furious Rhino on Threads"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
 
             <FluentAnchor Href="#" Class="fluent-anchor">
-                <img src="/content/kickstartersociallogo.png"
+                <img src="/img/kickstartersocial.png"
                      alt="Furious Rhino on Kickstarter"
                      style="max-height:18px;width:auto;" />
             </FluentAnchor>
@@ -78,7 +77,8 @@
 
     private Icon themeIcon
     {
-        get {
+        get
+        {
             return currentTheme == DesignThemeModes.Dark ? new Icons.Regular.Size24.WeatherSunny() : new Icons.Regular.Size24.WeatherMoon();
         }
         set { }

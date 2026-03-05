@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
-	  <ProjectReference Include="..\..\..\Products\Lux Prismatis\Management Tool\LuxPrismatis.Core\LuxPrismatis.Core.csproj"></ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\levels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
