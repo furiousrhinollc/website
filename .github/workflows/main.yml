@@ -1,7 +1,7 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 env:
-  PUBLISH_DIR: FuriousRhino.Web.Sites.Main/bin/Release/net10.0/publish
+  PUBLISH_DIR: FuriousRhino.Web.Sites.Main/bin/Release/net10.0/publish/wwwroot
 
 on:
   # Runs on pushes targeting the default branch
@@ -46,8 +46,8 @@ jobs:
         run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5.0.0
-      - name: List wwwroot
-        run: ls -la ${{ env.PUBLISH_DIR }}/wwwroot
+      - name: List wwwroot/_framework
+        run: ls -la ${{ env.PUBLISH_DIR }}/wwwroot/_framework
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4.0.0
         with:
