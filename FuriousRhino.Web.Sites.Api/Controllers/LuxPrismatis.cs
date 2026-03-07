@@ -77,5 +77,18 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
 
             return Redirect(publicUrl);
         }
+
+        [HttpGet("debug")]
+        public IActionResult Debug()
+        {
+            var basePath = Environment.GetEnvironmentVariable("LEVELS_PATH") ?? _env.ContentRootPath;
+            var levelsPath = Path.Combine(basePath, "levels");
+
+            if (!Directory.Exists(levelsPath))
+                return Ok("Levels directory does not exist");
+
+            var files = Directory.GetFiles(levelsPath);
+            return Ok(files);
+        }
     }
 }
