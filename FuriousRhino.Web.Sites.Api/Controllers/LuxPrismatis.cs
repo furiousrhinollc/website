@@ -61,6 +61,20 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
                         return StatusCode(StatusCodes.Status500InternalServerError, "Failed to retrieve Daily Challenge");
                     }
                 }
+
+                // Clean up files older than yesterday
+                var yesterday = today.AddDays(-1);
+                foreach (var file in Directory.GetFiles(levelsPath, "daily-*.json"))
+                {
+                    var name = Path.GetFileNameWithoutExtension(file); // "daily-2025-03-04"
+                    if (DateOnly.TryParseExact(name["daily-".Length..], "yyyy-MM-dd", out var fileDate)
+                        && fileDate < DateOnly.FromDateTime(yesterday))
+                    {
+                        System.IO.File.Delete(file);
+                        var lf = file + ".lock";
+                        if (System.IO.File.Exists(lf)) System.IO.File.Delete(lf);
+                    }
+                }
             }
 
             // Build the public URL
