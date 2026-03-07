@@ -1,2 +1,0 @@
-[phases.build]
-cmds = ["dotnet restore --configfile nuget.config", "dotnet publish -c Release -o /app/publish"]
