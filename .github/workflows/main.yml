@@ -43,7 +43,7 @@ jobs:
       - name: Publish project
         run: dotnet publish FuriousRhino.Web.Sites.Main -c Release
       - name: Find publish output
-        run: find FuriousRhino.Web.Sites.Main/bin -name "blazor.boot.json" 2>/dev/null
+        run: find FuriousRhino.Web.Sites.Main/bin -type f 2>/dev/null | head -20
       - name: Disable Jekyll
         run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
       - name: Setup Pages
