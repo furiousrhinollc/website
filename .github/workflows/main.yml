@@ -41,7 +41,7 @@ jobs:
         with:
           dotnet-version: '10.0.x'
       - name: Publish project
-        run: dotnet publish FuriousRhino.Web.Sites.Main -c Release -o ./publish
+        run: dotnet publish FuriousRhino.Web.Sites.Main -c Release -o ./publish -p:PublishSingleFile=false
       - name: Find publish output
         run: find ./publish -name "blazor.boot.json" 2>/dev/null
       - name: Disable Jekyll
