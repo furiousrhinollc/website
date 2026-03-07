@@ -17,7 +17,8 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
         {
             var today = DateTime.UtcNow.AddHours(-7).Date;
 
-            var levelsPath = Path.Combine(_env.WebRootPath, "levels");
+            var basePath = Environment.GetEnvironmentVariable("LEVELS_PATH") ?? _env.ContentRootPath;
+            var levelsPath = Path.Combine(basePath, "levels");
             Directory.CreateDirectory(levelsPath);
 
             var fileLabel = $"daily-{today:yyyy-MM-dd}";
