@@ -46,8 +46,8 @@ jobs:
         run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5.0.0
-      - name: List wwwroot/_framework
-        run: ls -la ${{ env.PUBLISH_DIR }}/wwwroot/_framework
+      - name: List _framework
+        run: ls -la ${{ env.PUBLISH_DIR }}/_framework
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4.0.0
         with:
