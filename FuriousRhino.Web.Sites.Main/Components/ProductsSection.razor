@@ -1,0 +1,104 @@
+﻿@using FuriousRhino.Web.Sites.Main.Models
+@inject IJSRuntime JS
+
+<section class="products-section" id="products" aria-label="Behold! Our stuff">
+    <div class="section-inner">
+
+        <div class="reveal">
+            <p class="section-label">Our stuff</p>
+            <h2 class="section-title">
+                Stuff we're making
+            </h2>
+            <p class="section-sub">
+                From card games to mobile puzzlers. If it sounds interesting, we want to make it.
+            </p>
+        </div>
+
+        <div class="products-grid">
+            @foreach (var game in _games)
+            {
+                <a href="@game.LinkHref"
+                   class="product-card reveal @(game.IsDashed ? "dashed" : "")"
+                   aria-label="@game.Title">
+
+                    <div class="product-card-logo">
+                        <img src="@game.LogoPath" alt="@game.Title logo" />
+                    </div>
+
+                    <span class="product-tag @game.TagCssClass">@game.TagLabel</span>
+                    <h3>@game.Title</h3>
+                    <p>@game.Description</p>
+                    <span class="product-arrow" aria-hidden="true">↗</span>
+                </a>
+            }
+        </div>
+
+        <!-- Activism -->
+        <a href="https://resist.bot"
+           target="_blank"
+           rel="noopener"
+           class="activism-block reveal"
+           aria-label="Visit Resistbot — civic action tool (opens in new tab)">
+            <div class="activism-text">
+                <h3>We stand for something too.</h3>
+                <p>
+                    Games are great, but so is civic action. Reach your representatives
+                    easily via Resistbot — because making stuff also means making change.
+                    While we obviously support rhino conservation, we also support human
+                    rights for everyone. Everyone.
+                </p>
+            </div>
+            <div class="activism-cta">Visit Resistbot ↗</div>
+        </a>
+
+    </div>
+</section>
+
+@code {
+    private static readonly List<GameModel> _games =
+    [
+        new(
+            Title:          "Zombees",
+            Description:    "Fun and casual, great for an icebreaker at game night. Launching our " +
+                            "Kickstarter soon!",
+            LogoPath:       "content/zombeeslogo.png",
+            TagLabel:       "Card Game · Kickstarter",
+            TagCssClass:    "tag-kickstarter",
+            LinkHref:       "https://www.tiktok.com/@@furiousrhino/video/7573397600460672287"
+        ),
+        new(
+            Title:          "Lux Prismatis",
+            Description:    "A puzzle game for iOS and Android. Beautiful, geometric, and " +
+                            "surprisingly complex. Complete with a daily challenge to keep you going.",
+            LogoPath:       "content/luxlogo.png",
+            TagLabel:       "Mobile · iOS & Android",
+            TagCssClass:    "tag-mobile",
+            LinkHref:       "/games/lux-prismatis"
+        ),
+        new(
+            Title:          "Zombie Dinosaurs",
+            Description:    "The game that started it all - conceived in 2013 while camping, fully prototyped " +
+                            "in 2018 after years of whiteboard playtesting. Kickstarter (eventually) coming soon!",
+            LogoPath:       "content/zdlogo.png",
+            TagLabel:       "Board Game · Coming Soon",
+            TagCssClass:    "tag-board",
+            LinkHref:       "/games/zombie-dinosaurs"
+        ),
+        new(
+            Title:          "Something else entirely",
+            Description:    "Another mobile game in the works. Details coming soon. Something " +
+                            "with mountains, maybe.",
+            LogoPath:       "content/controller.png",
+            TagLabel:       "Untitled · In Development",
+            TagCssClass:    "tag-coming",
+            LinkHref:       "#",
+            IsDashed:       true
+        )
+    ];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("FuriousRhino.Reveal.refresh");
+    }
+}

@@ -1,0 +1,147 @@
+﻿@page "/games/zombie-dinosaurs"
+@layout MainLayout
+@using FuriousRhino.Web.Sites.Main.Components
+@using FuriousRhino.Web.Sites.Main.Models
+@inject IJSRuntime JS
+
+<PageTitle>Zombie Dinosaurs — Furious Rhino</PageTitle>
+
+<GamePageHero Title="Zombie Dinosaurs"
+              Tagline="The game that started it all. Dinosaurs were already cool. Then they died. Then they came back."
+              LogoPath="/content/zdlogo.png"
+              TagLabel="Board Game · Coming Soon"
+              TagCssClass="tag-board"
+              AccentColor="#ffb340">
+    <span class="game-status-badge status-coming-soon">Coming Soon</span>
+</GamePageHero>
+
+@* ---- OVERVIEW ---- *@
+<section class="game-section" id="overview">
+    <div class="section-inner">
+        <div class="game-overview-grid">
+            <div class="game-overview-copy">
+                <p class="section-label">Overview</p>
+                <h2 class="section-title">Conceived in 2013.<br />We're so lazy.</h2>
+                <p>
+                    It finally happened. In a misguided attempt to cure athlete's foot, scientists unlocked
+                    the key to life… and then death again with a little bit of life leftover. Now those leftovers
+                    are eating your leftover meatloaf and your friends. And, to be fair, your enemies as well (Gary, ha!).
+                    Regardless, Zombie Dinosaurs are out and about and the world is toast. Now you're just trying to
+                    survive and outlive these other jerks who keep stealing your stuff that you stole from them. You
+                    dared to scrounge for the goods in the decimated city and are trying to get back to camp. This supply
+                    run may be your last…
+                </p>
+                <p>
+                    We'll have some more details soon.
+                </p>
+            </div>
+            <div class="game-overview-stats">
+                <div class="stat-box">
+                    <div class="stat-num">2013</div>
+                    <div class="stat-label">Conceived</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">2018</div>
+                    <div class="stat-label">Fully prototyped</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">2-7</div>
+                    <div class="stat-label">Player count</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">TBD</div>
+                    <div class="stat-label">Release date</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---- SCREENSHOTS / PROTOTYPE PHOTOS ---- *@
+<ScreenshotGallery AspectRatio="16/10"
+                   Label="Prototype"
+                   Title="It exists. We promise."
+                   Screenshots=_screenshots
+                   PlaceholderCount="0" />
+
+@* ---- ROADMAP ---- *@
+<section class="game-section game-section--alt" id="roadmap">
+    <div class="section-inner">
+        <div>
+            <p class="section-label">Roadmap</p>
+            <h2 class="section-title">Where we're at</h2>
+        </div>
+        <div class="roadmap-track">
+            @foreach (var item in _roadmap)
+            {
+                <div class="roadmap-item roadmap-@item.Status.ToString().ToLower()">
+                    <div class="roadmap-marker" aria-hidden="true"></div>
+                    <div class="roadmap-content">
+                        <div class="roadmap-label">@_statusLabel[item.Status]</div>
+                        <h3>@item.Label</h3>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("FuriousRhino.Reveal.init");
+    }
+
+    private static readonly Dictionary<RoadmapStatus, string> _statusLabel = new()
+    {
+        { RoadmapStatus.Done,       "✓ Done"        },
+        { RoadmapStatus.InProgress, "⬡ In progress" },
+        { RoadmapStatus.Upcoming,   "○ Upcoming"    },
+    };
+
+    private static readonly List<RoadmapItem> _roadmap =
+    [
+        new("Original concept",
+            "Whilst camping and musing on the silly amount of zombie stuff in 2013, we decided Zombie Dinosaurs was a concept that should exist.",
+            RoadmapStatus.Done),
+
+        new("The Drunken Epiphany",
+            "Drawn on a white board after a date with bourbon.",
+            RoadmapStatus.Done),
+
+        new("Prototype v1",
+            "Whiteboards can be game boards, too. Figuring stuff out.",
+            RoadmapStatus.Done),
+
+        new("Playtesting & refinement, Prototype v2",
+            "Flavor text added in a spree late into the night, a better prototype is born.",
+            RoadmapStatus.Done),
+
+        new("Prototype v3",
+            "Draft artwork created, first actual prototype created. We thought we were close. We were not.",
+            RoadmapStatus.Done),
+
+        new("Zombees first",
+            "Zombie Dinosaurs is queued behind Zombees. Once the Kickstarter wraps we shift focus here.",
+            RoadmapStatus.InProgress),
+
+        new("Production design",
+            "Final component design, artwork, and manufacturing specifications for a production run.",
+            RoadmapStatus.Upcoming),
+
+        new("Release",
+            "Kickstarter or direct — TBD. Either way, it's coming.",
+            RoadmapStatus.Upcoming),
+    ];
+
+    private static readonly List<ScreenshotItem> _screenshots =
+    [
+        new("zd1.png", "A whiteboard full of brilliance"),
+        new("zd2.png", "Hopes and dreams coming together"),
+        new("zd3.png", "'Tis art, good people'"),
+        new("zd4.png", "It's almost a real game"),
+        new("zd5.png", "So shiny"),
+    ];
+}

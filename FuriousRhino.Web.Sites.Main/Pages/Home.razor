@@ -1,20 +1,12 @@
 ﻿@page "/"
+@layout MainLayout
+@using FuriousRhino.Web.Sites.Main.Components
+@inject IJSRuntime JS
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Furious Rhino — We Make Stuff</PageTitle>
 
-<FluentCard Height="auto">
-    <FluentStack Orientation="Orientation.Vertical" 
-        HorizontalAlignment="HorizontalAlignment.Center" 
-        VerticalGap="25" 
-        Style="flex-wrap:wrap;">
-        
-        <FluentAnchor Href="https://resist.bot/" Appearance="Appearance.Stealth" title="Contact your elected officials">Contact your elected officials</FluentAnchor>
-
-        <div>
-            <img src="content/zombeeslogo.png" style="display:block;max-width:100%;height:auto;" />
-            <br />
-            <img src="content/kickstarterlogo.png" style="display:block;max-width:100%;height:auto;" />
-        </div>
-        <div>Our Kickstarter is coming soon! Check back later for more info.</div>
-    </FluentStack>
-</FluentCard>
+<HeroSection />
+<KickstarterBanner />
+<ProductsSection />
+<AboutSection />
+<SocialsSection />

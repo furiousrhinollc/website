@@ -1,50 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Google tag (gtag.js) -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Furious Rhino - We Make Stuff</title>
+    <meta name="description" content="Furious Rhino LLC makes board games, mobile games, apps, and short-form video. Based in Phoenix, AZ. Makers of Zombees, Lux Prismatis, and Zombie Dinosaurs." />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="canonical" href="https://www.furiousrhino.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.furiousrhino.com/" />
+    <meta property="og:title" content="Furious Rhino - We Make Stuff" />
+    <meta property="og:description" content="Board games, mobile games, apps, and short-form video from Phoenix, AZ." />
+    <meta property="og:image" content="https://www.furiousrhino.com/img/og-image.png" />
+
+    <!-- Icons -->
+    <link rel="icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="img/logo-192.png" />
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="css/site.css" />
+
+    <!-- GitHub Pages SPA redirect handler -->
+    <!-- See: https://github.com/rafgraph/spa-github-pages -->
+    <script>
+        // Decode the ?p= query string redirect written by 404.html
+        (function () {
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect !== location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-169J14DE79"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-169J14DE79');
     </script>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Furious Rhino</title>
-    <base href="/" />
-    <link rel="preload" id="webassembly" />
-    <link href="_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="css/site.css" />
-    <link rel="icon" type="image/x-png" href="favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="FuriousRhino.Web.Sites.Main.styles.css" rel="stylesheet" />
-    <script type="importmap"></script>
 </head>
 
 <body>
-    <script src="_content/Microsoft.FluentUI.AspNetCore.Components/js/loading-theme.js" type="text/javascript"></script>
-    <loading-theme storage-name="frtheme"></loading-theme>
-    <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
+    <!-- WASM loading screen shown before Blazor boots -->
+    <div class="loading-progress" id="app-loading">
+        <p class="loading-progress-text">Loading…</p>
+        <svg class="loading-progress-circle" viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="20" />
         </svg>
-        <div class="loading-progress-text"></div>
     </div>
 
+    <!-- Blazor root -->
+    <div id="app">
+        <!-- Blazor replaces this content once loaded -->
+    </div>
+
+    <!-- Blazor error UI -->
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
+        An unhandled error has occurred. <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
     </div>
-    <script src="decode.js"></script>
-    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
-</body>
 
+    <!-- Site JS (before Blazor so theme applies before first paint) -->
+    <script src="js/site.js"></script>
+    <script src="decode.js"></script>
+
+    <!-- Blazor WASM runtime -->
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js" autostart="false"></script>
+
+    <!-- Hide loader once Blazor is ready -->
+    <script>
+        Blazor.start().then(function () {
+            var loader = document.getElementById('app-loading');
+            if (loader) {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.4s ease';
+                setTimeout(function () { loader.remove(); }, 400);
+            }
+            // Init JS behaviours that need the full DOM
+            FuriousRhino.init();
+        });
+    </script>
+</body>
 </html>

@@ -1,91 +1,102 @@
-﻿@inherits LayoutComponentBase
+﻿@using FuriousRhino.Web.Sites.Main.Components
+@inherits LayoutComponentBase
+@inject IJSRuntime JS
+@inject NavigationManager Nav
 
-<FluentLayout>
-    <FluentDesignTheme CustomColor="#000000"
-                       @bind-Mode="@currentTheme"
-                       StorageName="frtheme" />
-    <FluentHeader Class="siteheader">
-        <a href="/" title="Furious Rhino"><img src="content/logotitle.png" alt="Furious Rhino" class="logo" height="40" /></a>
-        <FluentSpacer />
-        <FluentButton @onclick="ChangeTheme" @bind-IconStart="@themeIcon">Mode</FluentButton>
-    </FluentHeader>
-    <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
-        <NavMenu />
-        <FluentBodyContent Class="body-content">
-            <ErrorBoundary>
-                <ChildContent>
-                    <div class="content">
-                        @Body
-                    </div>
-                </ChildContent>
-                <ErrorContent Context="ex">
-                    <div class="blazor-error-boundary">@ex.Message</div>
-                </ErrorContent>
-            </ErrorBoundary>
-        </FluentBodyContent>
-    </FluentStack>
-    <FluentFooter Class="sitefooter">
-        <FluentStack Orientation="Orientation.Horizontal"
-                     HorizontalAlignment="HorizontalAlignment.Center"
-                     HorizontalGap="25">
+<div class="fr-site-wrapper">
 
-            <FluentAnchor Href="@tikTokLink" target="_blank" Class="fluent-anchor">
-                <img src="/img/tiktok.png"
-                     alt="Furious Rhino on TikTok"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
+    <!-- NAV -->
+    <nav class="fr-nav" id="fr-nav" role="navigation" aria-label="Main navigation">
+        <a href="/" class="nav-brand" @onclick="CloseMenu">
+            <FuriousRhinoLogo Size="36" />
+            <span class="nav-wordmark">Furious Rhino</span>
+        </a>
 
-            <FluentAnchor Href="https://bsky.app/profile/furiousrhino.com" target="_blank" Class="fluent-anchor">
-                <img src="/img/bluesky.png"
-                     alt="Furious Rhino on BlueSky"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
+        <ul class="nav-links" id="fr-nav-links" role="list">
+            <li><a href="/#products" @onclick="CloseMenu">Games</a></li>
+            <li><a href="/#about" @onclick="CloseMenu">About</a></li>
+            <li><a href="/ideas" @onclick="CloseMenu">Ideas</a></li>
+            <li><a href="mailto:support@furiousrhino.com">Contact</a></li>
+            <li>
+                <a href="/#kickstarter" class="nav-cta" @onclick="CloseMenu">
+                    Kickstarter
+                </a>
+            </li>
+        </ul>
 
-            <FluentAnchor Href="@youTubeLink" target="_blank" Class="fluent-anchor">
-                <img src="/img/youtube.png"
-                     alt="Furious Rhino on YouTube"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
+        <div class="nav-right">
+            <button class="hamburger"
+                    id="fr-hamburger"
+                    @onclick="ToggleMenu"
+                    aria-label="Open navigation menu"
+                    aria-expanded="@_menuOpen.ToString().ToLower()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-            <FluentAnchor Href="https://www.instagram.com/furiousrhino/" target="_blank" Class="fluent-anchor">
-                <img src="/img/instagram.png"
-                     alt="Furious Rhino on Instagram"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
+    <!-- PAGE CONTENT -->
+    <main>
+        @Body
+    </main>
 
-            <FluentAnchor Href="@threadsLink" target="_blank" Class="fluent-anchor">
-                <img src="/img/threads.png"
-                     alt="Furious Rhino on Threads"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
+    <!-- FOOTER -->
+    <footer class="fr-footer" role="contentinfo">
+        <div class="footer-brand">
+            <FuriousRhinoLogo Size="28" CircleVariant="true" />
+            <span>&copy; @DateTime.Now.Year Furious Rhino LLC · Phoenix, AZ</span>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="/#products">Games</a>
+            <a href="/#about">About</a>
+            <a href="/ideas">Ideas</a>
+            <a href="https://resist.bot" target="_blank" rel="noopener">Resistbot</a>
+            <a href="mailto:support@furiousrhino.com">Contact</a>
+        </nav>
+        <p class="footer-legal">Made with questionable judgment and puppies.</p>
+    </footer>
 
-            <FluentAnchor Href="#" Class="fluent-anchor">
-                <img src="/img/kickstartersocial.png"
-                     alt="Furious Rhino on Kickstarter"
-                     style="max-height:18px;width:auto;" />
-            </FluentAnchor>
-        </FluentStack>
-    </FluentFooter>
-</FluentLayout>
+</div>
 
 @code {
-    private readonly string tikTokLink = "https://www.tiktok.com/@furiousrhino";
-    private readonly string youTubeLink = "https://www.youtube.com/@furiousrhinollc";
-    private readonly string threadsLink = "https://www.threads.com/@furiousrhino";
+    private bool _isDark = true;
+    private bool _menuOpen = false;
 
-    private DesignThemeModes currentTheme = DesignThemeModes.Dark;
-
-    private Icon themeIcon
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        get
+        if (firstRender)
         {
-            return currentTheme == DesignThemeModes.Dark ? new Icons.Regular.Size24.WeatherSunny() : new Icons.Regular.Size24.WeatherMoon();
+            // Read whichever theme JS already applied so the icon matches
+            var theme = await JS.InvokeAsync<string>("FuriousRhino.Theme.getCurrent");
+            _isDark = theme != "light";
+            StateHasChanged();
+
+            // Hook up scroll highlight and reveal for this route
+            await JS.InvokeVoidAsync("FuriousRhino.NavHighlight.init");
+            await JS.InvokeVoidAsync("FuriousRhino.Reveal.init");
         }
-        set { }
     }
 
-    private void ChangeTheme()
+    private async Task ToggleTheme()
     {
-        currentTheme = currentTheme == DesignThemeModes.Dark ? DesignThemeModes.Light : DesignThemeModes.Dark;
+        var next = await JS.InvokeAsync<string>("FuriousRhino.Theme.toggle");
+        _isDark = next != "light";
+    }
+
+    private async Task ToggleMenu()
+    {
+        _menuOpen = !_menuOpen;
+        await JS.InvokeVoidAsync("FuriousRhino.Nav.toggleMenu");
+    }
+
+    private async Task CloseMenu()
+    {
+        if (_menuOpen)
+        {
+            _menuOpen = false;
+            await JS.InvokeVoidAsync("FuriousRhino.Nav.closeMenu");
+        }
     }
 }

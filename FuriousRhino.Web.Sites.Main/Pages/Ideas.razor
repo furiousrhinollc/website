@@ -1,0 +1,159 @@
+﻿@page "/ideas"
+@layout MainLayout
+@using FuriousRhino.Web.Sites.Main.Models
+@inject IJSRuntime JS
+
+<PageTitle>Ideas — Furious Rhino</PageTitle>
+
+@* ---- PAGE HERO ---- *@
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <p class="hero-kicker">What we're thinking about</p>
+        <h1 class="page-hero-title">The Idea Wall</h1>
+        <p class="page-hero-sub">
+            I don't know, these could happen.
+        </p>
+    </div>
+</div>
+
+@* ---- FILTER TABS ---- *@
+<div class="ideas-filter-bar">
+    <div class="section-inner">
+        <div class="ideas-filter-tabs">
+            @foreach (var tab in _tabs)
+            {
+                <button class="ideas-tab @(_activeFilter == tab.Filter ? "active" : "")"
+                        @onclick="() => _activeFilter = tab.Filter">
+                    @tab.Label
+                    <span class="ideas-tab-count">@CountFor(tab.Filter)</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@* ---- IDEAS GRID ---- *@
+<section class="ideas-section">
+    <div class="section-inner">
+        <div class="ideas-grid">
+            @foreach (var idea in FilteredIdeas)
+            {
+                <div class="idea-card">
+                    <div class="idea-card-header">
+                        <span class="idea-status-badge status-@idea.Status.ToString().ToLower()">
+                            @_statusLabels[idea.Status]
+                        </span>
+                    </div>
+                    <span class="idea-category">@idea.CategoryLabel</span>
+                    <h3>@idea.Title</h3>
+                    <p>@idea.Description</p>
+                </div>
+            }
+        </div>
+
+        @if (!FilteredIdeas.Any())
+        {
+            <div class="ideas-empty">
+                <p>Nothing in this category yet. Check back after we have another shower thought.</p>
+            </div>
+        }
+    </div>
+</section>
+
+@* ---- BOTTOM CTA ---- *@
+<div class="ideas-cta-block">
+    <div class="section-inner">
+        <div class="ideas-cta-inner">
+            <p>Got an idea you think we should make?</p>
+            <a href="mailto:social@furiousrhino.com" class="btn btn-ghost btn-sm">
+                Tell us about it →
+            </a>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("FuriousRhino.Reveal.init");
+    }
+
+    private IdeaStatus? _activeFilter = null;
+
+    private record TabDef(string Label, IdeaStatus? Filter);
+
+    private static readonly List<TabDef> _tabs =
+    [
+        new("All",         null),
+        new("Thinking",    IdeaStatus.Thinking),
+        new("Exploring",   IdeaStatus.Exploring),
+        new("Developing",  IdeaStatus.Developing),
+        new("Shelved",     IdeaStatus.Shelved),
+    ];
+
+    private static readonly Dictionary<IdeaStatus, string> _statusLabels = new()
+    {
+        { IdeaStatus.Thinking,   "Thinking"   },
+        { IdeaStatus.Exploring,  "Exploring"  },
+        { IdeaStatus.Developing, "Developing" },
+        { IdeaStatus.Shelved,    "Shelved"    },
+    };
+
+    private IEnumerable<IdeaModel> FilteredIdeas => _activeFilter is null
+        ? _ideas
+        : _ideas.Where(i => i.Status == _activeFilter);
+
+    private int CountFor(IdeaStatus? filter) => filter is null
+        ? _ideas.Count
+        : _ideas.Count(i => i.Status == filter);
+
+    // ----------------------------------------------------------------
+    // ADD YOUR IDEAS HERE
+    // ----------------------------------------------------------------
+    private static readonly List<IdeaModel> _ideas =
+    [
+        new(
+            Title:         "Zombie Dinosaurs: Extinction",
+            Description:   "Keep the party going with a tile-based build-and-fight strategy board game. Over the course of however long you want, try and rebuild civilization while fighting to survive. Also, Zombie Dinosaurs.",
+            CategoryLabel: "Game",
+            Status:        IdeaStatus.Developing
+        ),
+        new(
+            Title:         "Zombie Dinosaurs: Defense",
+            Description:   "Mobile game that is a tower defense-style game. Practically writes itself. I wish.",
+            CategoryLabel: "Game",
+            Status:        IdeaStatus.Thinking
+        ),
+        new(
+            Title:         "Collected By Me",
+            Description:   "A mobile app to track your collectibles. We have a lot of rhino stuff, you see.",
+            CategoryLabel: "App",
+            Status:        IdeaStatus.Thinking
+        ),
+        new(
+            Title:         "Bacon Brigade",
+            Description:   "Self-contained deck building battle game. Could be a mobile game instead. Or both.",
+            CategoryLabel: "Game",
+            Status:        IdeaStatus.Exploring
+        ),
+        new(
+            Title:         "Tana",
+            Description:   "Puzzle/action video game where you play Tana, a princess attempting to restore her lost kingdom. The kingdom was destroyed and rejected from a celestial plane and she must now work to get it back. She's unaware of exactly what's going on. Frankly, neither are we.",
+            CategoryLabel: "Game",
+            Status:        IdeaStatus.Thinking
+        ),
+        new(
+            Title:         "Untitled Space Game",
+            Description:   "Something massive. A fully open world with exploration and building. Not a game, exactly. No idea, we'll see.",
+            CategoryLabel: "Board Game",
+            Status:        IdeaStatus.Shelved
+        ),
+        new(
+            Title:         "Mobile game versions of ZD games and Zombees",
+            Description:   "Why be with friends and family enjoying a nice game night when you could be bathed by the glow of a screen instead?",
+            CategoryLabel: "Game",
+            Status:        IdeaStatus.Thinking
+        ),
+    ];
+}

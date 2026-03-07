@@ -1,0 +1,37 @@
+﻿@inject IJSRuntime JS
+
+<section class="hero" id="home" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-noise" aria-hidden="true"></div>
+
+    <div class="hero-content">
+        <p class="hero-kicker">Furious Rhino</p>
+
+        <div class="hero-logo">
+            <FuriousRhinoLogo Size="250" />
+        </div>
+
+        <h1 class="hero-tagline">We make <em>stuff.</em></h1>
+
+        <p class="hero-sub">
+            Games. Apps. Short videos. Whatever pops into our heads.
+            We've been cooking up things we think are fun, mileage may vary.
+        </p>
+
+        <div class="hero-actions">
+            <button class="btn btn-primary"
+                    @onclick='() => JS.InvokeVoidAsync("FuriousRhino.scrollTo", "#kickstarter")'>
+                Back Zombees on Kickstarter
+            </button>
+            <button class="btn btn-ghost"
+                    @onclick='() => JS.InvokeVoidAsync("FuriousRhino.scrollTo", "#products")'>
+                See our games →
+            </button>
+        </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-dot"></div>
+    </div>
+</section>

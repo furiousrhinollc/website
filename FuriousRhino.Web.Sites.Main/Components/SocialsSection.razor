@@ -1,0 +1,32 @@
+﻿<section class="socials-section" id="socials" aria-label="Social media links">
+    <div class="section-inner">
+        <p class="socials-label">Find us everywhere</p>
+        <div class="social-chips">
+            @foreach (var link in _socials)
+            {
+                <a href="@link.Url"
+                   target="_blank"
+                   rel="noopener"
+                   class="social-chip"
+                   aria-label="@link.Label on @link.Platform (opens in new tab)">
+                    <span aria-hidden="true"><img src="@link.IconPath" style="max-height:18px;width:auto;" /></span>    
+                    @link.Platform
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private record SocialLink(string Platform, string IconPath, string Url, string Label);
+
+    private static readonly List<SocialLink> _socials =
+    [
+        new("TikTok",     "/img/tiktok.png", "https://tiktok.com/@furiousrhino",    "Furious Rhino"),
+        new("BlueSky",    "/img/bluesky.png", "https://bsky.app/profile/furiousrhino.com", "Furious Rhino"),
+        new("YouTube",    "/img/youtube.png", "https://youtube.com/@furiousrhinollc",   "Furious Rhino"),
+        new("Instagram",  "/img/instagram.png", "https://instagram.com/furiousrhino",  "Furious Rhino"),
+        new("Threads",    "/img/threads.png", "https://threads.net/@furiousrhino",   "Furious Rhino"),
+        new("Kickstarter",    "/img/kickstartersocial.png", "#",   "Furious Rhino"),
+    ];
+}

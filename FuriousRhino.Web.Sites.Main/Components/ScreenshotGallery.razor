@@ -1,0 +1,45 @@
+﻿@using FuriousRhino.Web.Sites.Main.Models
+@* Placeholder screenshot gallery.
+   Pass real image paths via Screenshots once assets exist.
+   Falls back to styled placeholder slots.
+   AspectRatio accepts any valid CSS aspect-ratio value, e.g. "16/10", "9/19.5", "4/3". *@
+
+<section class="screenshot-gallery-section">
+    <div class="section-inner">
+        <p class="section-label">@Label</p>
+        <h2 class="section-title">@Title</h2>
+        <div class="screenshot-grid" style="--slot-aspect: @AspectRatio;">
+            @if (Screenshots is { Count: > 0 })
+            {
+                @foreach (var s in Screenshots)
+                {
+                    <div class="screenshot-slot">
+                        <img src="/content/screenshots/@s.Path" alt="@s.Caption" />
+                        @if (!string.IsNullOrEmpty(s.Caption))
+                        {
+                            <p class="screenshot-caption">@s.Caption</p>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                @for (int i = 0; i < PlaceholderCount; i++)
+                {
+                    <div class="screenshot-slot screenshot-placeholder" aria-hidden="true">
+                        <span>Screenshots coming soon</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string Label { get; set; } = "Screenshots";
+    [Parameter] public string Title { get; set; } = "See it in action";
+    [Parameter] public List<ScreenshotItem>? Screenshots { get; set; }
+    [Parameter] public int PlaceholderCount { get; set; } = 3;
+    /// <summary>CSS aspect-ratio value for each slot. Defaults to landscape 16/10.</summary>
+    [Parameter] public string AspectRatio { get; set; } = "16/10";
+}

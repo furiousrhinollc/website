@@ -1,0 +1,34 @@
+﻿@* Reusable hero for game detail pages.
+   Accepts the logo, tag, title, tagline, and an optional back-link. *@
+
+<div class="game-hero" style="--hero-accent: @AccentColor;">
+    <div class="game-hero-bg" aria-hidden="true"></div>
+    <div class="game-hero-inner">
+        <a href="/#products" class="game-back-link">
+            ← All games
+        </a>
+        <div class="game-hero-logo">
+            <img src="@LogoPath" alt="@Title logo" />
+        </div>
+        <span class="product-tag @TagCssClass">@TagLabel</span>
+        <h1 class="game-hero-title">@Title</h1>
+        <p class="game-hero-tagline">@Tagline</p>
+        @if (ChildContent is not null)
+        {
+            <div class="game-hero-actions">
+                @ChildContent
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Tagline { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string LogoPath { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string TagLabel { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string TagCssClass { get; set; } = string.Empty;
+    /// <summary>CSS colour value used for the hero accent glow. Defaults to brand red.</summary>
+    [Parameter] public string AccentColor { get; set; } = "var(--color-red)";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
