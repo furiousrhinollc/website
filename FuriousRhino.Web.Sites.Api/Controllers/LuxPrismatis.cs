@@ -51,7 +51,8 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
                         var generator = new LevelGenerator();
                         var level = generator.Generate(request);
 
-                        var json = JsonSerializer.Serialize(level);
+                        var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
+                        var json = JsonSerializer.Serialize(level, options);
                         await System.IO.File.WriteAllTextAsync(filePath, json);
                     }
                     catch (InvalidOperationException) when (attempt < MaxRetries) { }
@@ -78,7 +79,7 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
             return Redirect(publicUrl);
         }
 
-        [HttpGet("debug")]
+        /*[HttpGet("debug")]
         public IActionResult Debug()
         {
             var basePath = Environment.GetEnvironmentVariable("LEVELS_PATH") ?? _env.ContentRootPath;
@@ -89,6 +90,6 @@ namespace FuriousRhino.Web.Sites.Api.Controllers
 
             var files = Directory.GetFiles(levelsPath);
             return Ok(files);
-        }
+        }*/
     }
 }
