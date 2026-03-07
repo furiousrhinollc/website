@@ -12,14 +12,15 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Environment.GetEnvironmentVariable("LEVELS_PATH") ??
-        Path.Combine(builder.Environment.ContentRootPath, "levels")),
+        Path.Combine(
+            Environment.GetEnvironmentVariable("LEVELS_PATH") ?? app.Environment.ContentRootPath,
+            "levels")),
     RequestPath = "/levels"
 });
+
+app.MapControllers();
 
 app.Run();
