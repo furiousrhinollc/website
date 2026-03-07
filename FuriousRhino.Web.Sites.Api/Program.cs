@@ -12,6 +12,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+// Ensure the data directory exists before mounting the file provider
+Directory.CreateDirectory($"{Environment.GetEnvironmentVariable("LEVELS_PATH")}/levels");
+
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
