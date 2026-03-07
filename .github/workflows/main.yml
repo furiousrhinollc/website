@@ -1,7 +1,7 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 env:
-  PUBLISH_DIR: FuriousRhino.Web.Sites.Main/bin/Release/net10.0/publish/wwwroot
+  PUBLISH_DIR: ./publish/wwwroot
 
 on:
   # Runs on pushes targeting the default branch
@@ -41,9 +41,9 @@ jobs:
         with:
           dotnet-version: '10.0.x'
       - name: Publish project
-        run: dotnet publish FuriousRhino.Web.Sites.Main -c Release
+        run: dotnet publish FuriousRhino.Web.Sites.Main -c Release -o ./publish
       - name: Find publish output
-        run: find FuriousRhino.Web.Sites.Main/bin -type f 2>/dev/null | head -20
+        run: find ./publish -name "blazor.boot.json" 2>/dev/null
       - name: Disable Jekyll
         run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
       - name: Setup Pages
